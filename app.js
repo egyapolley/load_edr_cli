@@ -30,7 +30,7 @@ sequelize.sync({
                             let voucherType =  (/VOUCHER_TYPE=(.+?)\|/.exec(dataString))[1];
                             let recordDate = (/RECORD_DATE=(.+?)\|/.exec(dataString))[1];
                             msisdn="233255"+msisdn;
-                            let dateOfRecharge = moment(recordDate,"YYYYMMDDHHmmss").format("DD-MM-YYYY HH:mm:ss")
+                            let dateOfRecharge = recordDate;
                             try {
                                 await RechargesEDR.create({msisdn,dateOfRecharge,voucherType});
                             }catch (error){
@@ -42,7 +42,7 @@ sequelize.sync({
                         for (const dataString of dataArray) {
                             let tempArray = dataString.split("|");
                             let msisdn = tempArray[2];
-                            let dateExpired =  moment(tempArray[0],"YYYYMMDDHHmmss").format("DD-MM-YYYY HH:mm:ss");
+                            let dateExpired =  tempArray[0];
                             let value =tempArray[1];
                             try {
                                 await ExpiredEDR.create({msisdn,dateExpired,value});
@@ -55,8 +55,8 @@ sequelize.sync({
                         for (const dataString of dataArray) {
                             let tempArray = dataString.split("|");
                             let msisdn = tempArray[1];
-                            let dateOfActivation =  moment(tempArray[0],"YYYYMMDDHHmmss").format("DD-MM-YYYY HH:mm:ss");
-                            let dateOfExpiry=moment(tempArray[0],"YYYYMMDDHHmmss").add(30,"days").format("DD-MM-YYYY HH:mm:ss");
+                            let dateOfActivation=tempArray[0]
+                            let dateOfExpiry=moment(tempArray[0],"YYYYMMDDHHmmss").add(30,"days").format("YYYYMMDDHHmmss");
                             try {
                                 await ActivationEDR.create({msisdn,dateOfActivation,dateOfExpiry})
                             }catch (error){
