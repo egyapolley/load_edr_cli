@@ -44,7 +44,6 @@ const RechargesEDR = sequelize.define("rechargesEDR", {
     msisdn: {
         type:Sequelize.STRING,
         allowNull: false,
-        unique:true,
 
     },
 
